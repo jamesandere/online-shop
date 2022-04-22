@@ -17,6 +17,11 @@
     color: #fff;
   }
 
+  .navbar a {
+    text-decoration: none;
+    color: white;
+  }
+
   .nav-bag {
     display: flex;
     align-items: center;
@@ -30,7 +35,24 @@
     height: 25px;
     width: 25px;
     border-radius: 50%;
-    background-color: #14213d;
+    background-color: #003566;
     font-size: 14px;
     font-weight: 700;
+  }
+
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    color: rgb(68, 68, 68);
+  }
+
+  .not-found h2 {
+    font-size: 55px;
+  }
+
+  .not-found p {
+    font-size: 20px;
   }
