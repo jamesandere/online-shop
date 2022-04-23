@@ -1,21 +1,23 @@
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import NotFound from './pages/NotFound';
+import {ToastContainer} from 'react-toastify';
 
 function App() {
   return (
-    <div className="App">
+    <div className="">
       <BrowserRouter>
+      <ToastContainer />
       <Navbar />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/cart" exact element={<Cart />} />
         <Route path="/not_found" element={<NotFound />} />
-        <Route path="*" exact element={<Navigate to="/not_found" />}/>
+        <Route path="*" element={<Navigate to="/not_found" />}/>
       </Routes>
       </BrowserRouter>
     </div>
