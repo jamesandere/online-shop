@@ -1,10 +1,14 @@
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const productsRoute = require('./routes/products');
 
 dotenv.config();
+
+mongoose.connect(process.env.DB_URI).then(()=> console.log('DB connection successful'))
+.catch((err)=> console.log('DB connection failed', err.message));
 
 app.use(express.json());
 app.use(cors());
