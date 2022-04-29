@@ -7,6 +7,7 @@ import Cart from './pages/Cart';
 import NotFound from './pages/NotFound';
 import {ToastContainer} from 'react-toastify';
 import Register from './pages/Register';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" exact element={<Home />} />
         <Route path="/cart" exact element={<Cart />} />
         <Route path="/register" element={<Register /> } />
+        <Route path="/login" element={<Login />} />
         <Route path="/not_found" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/not_found" />}/>
       </Routes>
