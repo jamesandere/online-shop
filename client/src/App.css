@@ -296,3 +296,7 @@
     letter-spacing: 1.15px;
     cursor: pointer;
   }
+
+  .cart-checkout .btn-logout {
+    background-color: black;
+  }
