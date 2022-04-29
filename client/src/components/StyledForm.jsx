@@ -30,4 +30,9 @@ export const StyledForm = styled.form`
               border: none;
           }
       }
+
+      p {
+          font-size: 14px;
+          color: red;
+      }
 `;
