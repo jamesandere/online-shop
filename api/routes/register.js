@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 
   user.password = await bcrypt.hash(user.password, salt);
 
-  user = user.save();
+  user = await user.save();
 
   const token = genAuthToken(user);
 
