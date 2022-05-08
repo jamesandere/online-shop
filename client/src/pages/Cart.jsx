@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { removeFromCart, decreaseCart, clearCart, addToCart, getTotals } from '../redux/cartSlice';
 import { useEffect } from 'react';
+import PayButton from "../components/PayButton";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -94,7 +95,7 @@ const Cart = () => {
               </div>
               <p>Taxes and shipping calculated at checkout</p>
               {auth._id ? (
-                <button>Checkout</button>
+                <PayButton cartItems={cart.cartItems} />
               ): (<button className="btn-logout" onClick={()=> navigate("/login")}>Login to checkout</button>)}
               <div className="continue-shopping">
                 <Link to="/">

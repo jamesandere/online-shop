@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import {ToastContainer} from 'react-toastify';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import CheckoutSuccess from './pages/CheckoutSuccess';
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/cart" exact element={<Cart />} />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="/register" element={<Register /> } />
         <Route path="/login" element={<Login />} />
-        <Route path="/not_found" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/not_found" />}/>
       </Routes>
       </BrowserRouter>
