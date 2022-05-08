@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const productsRoute = require('./routes/products');
 const register = require('./routes/register');
 const login = require('./routes/login');
+const stripe = require('./routes/stripe');
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use("/api/register", register);
 app.use("/api/login", login);
 app.use("/products", productsRoute);
+app.use("/api/stripe", stripe);
 
 app.listen(process.env.PORT || 5000, 
     ()=> console.log(`Server started on port ${process.env.PORT}`));
