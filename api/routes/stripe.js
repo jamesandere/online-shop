@@ -1,11 +1,19 @@
 const router = require("express").Router();
 const Stripe = require("stripe");
+const express = require("express");
 
 require("dotenv").config();
 
 const stripe = Stripe(process.env.STRIPE_KEY);
 
 router.post("/create-checkout-session", async (req, res) => {
+  const customer = await stripe.customers.create({
+    metadata: {
+      userId: req.body.userId,
+      cart: JSON.stringify(req.body.cartItems),
+    }
+  });
+
   const line_items = req.body.cartItems.map((item) => {
     return {
       price_data: {
@@ -76,6 +84,7 @@ router.post("/create-checkout-session", async (req, res) => {
     phone_number_collection: {
       enabled: true,
     },
+    customer: customer.id,
     line_items,
     mode: "payment",
     success_url: `${process.env.CLIENT_URL}/checkout-success`,
@@ -85,4 +94,43 @@ router.post("/create-checkout-session", async (req, res) => {
   res.send({ url: session.url });
 });
 
+let endpointSecret;
+
+// endpointSecret = process.env.ENDPOINT_SECRET;
+
+router.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
+  const sig = request.headers['stripe-signature'];
+
+  let data;
+  let eventType;
+
+  if(endpointSecret){
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+
+    data = event.data.object;
+    event.type;
+  } else {
+    data = request.body.data.object;
+    eventType = request.body.type;
+  }
+
+
+  // Handle the event
+  if(eventType === 'checkout.session.completed'){
+    stripe.customers.retrieve(data.customer)
+    .then((customer) => {
+      console.log(customer);
+      console.log(data);
+    }).catch((error) => console.log(error.message));
+  }
+  // Return a 200 response to acknowledge receipt of the event
+  response.send().end();
+});
 module.exports = router;
