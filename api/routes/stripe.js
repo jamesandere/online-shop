@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Stripe = require("stripe");
 const express = require("express");
+const Order = require("../models/order");
 
 require("dotenv").config();
 
@@ -94,6 +95,29 @@ router.post("/create-checkout-session", async (req, res) => {
   res.send({ url: session.url });
 });
 
+//Create Order
+const createOrder = async(customer, data) => {
+  const items = JSON.parse(customer.metadata.cart);
+
+  const newOrder = new Order({
+    userId: customer.metadata.userId,
+    customerId: data.customer,
+    paymentIntentId: data.payment_intent,
+    products: items,
+    subtotal: data.amount_subtotal,
+    total: data.amount_total,
+    shipping: data.customer_details,
+    payment_status: data.payment_status
+  });
+
+  try {
+    const savedOrder = await newOrder.save();
+    console.log(savedOrder);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 let endpointSecret;
 
 // endpointSecret = process.env.ENDPOINT_SECRET;
@@ -128,6 +152,7 @@ router.post('/webhook', express.raw({type: 'application/json'}), (request, respo
     .then((customer) => {
       console.log(customer);
       console.log(data);
+      createOrder(customer, data);
     }).catch((error) => console.log(error.message));
   }
   // Return a 200 response to acknowledge receipt of the event
