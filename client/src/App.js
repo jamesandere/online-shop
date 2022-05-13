@@ -9,6 +9,10 @@ import {ToastContainer} from 'react-toastify';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import CheckoutSuccess from './pages/CheckoutSuccess';
+import Dashboard from './admin/Dashboard';
+import Products from './admin/Products';
+import Summary from './admin/Summary';
+import CreateProduct from './/admin/CreateProduct';
 
 function App() {
   return (
@@ -22,6 +26,12 @@ function App() {
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="/register" element={<Register /> } />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Dashboard />}>
+          <Route path="products" element={<Products />}>
+            <Route path="create-product" element={<CreateProduct />} />
+          </Route>
+          <Route path="summary" element={<Summary />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/not_found" />}/>
       </Routes>

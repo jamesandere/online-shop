@@ -300,3 +300,11 @@
   .cart-checkout .btn-logout {
     background-color: black;
   }
+
+  .link-active {
+    color: black;
+  }
+
+  .link-inactive {
+    color: gray;
+  }
