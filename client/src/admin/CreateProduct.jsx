@@ -1,39 +1,63 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { productsCreate } from "../redux/productsSlice";
+import { PrimaryButton } from "./CommonStyled";
 
 const CreateProduct = () => {
+  const { createStatus } = useSelector((state) => state.products);
+
   const [productImg, setProductImg] = useState("");
   const [brand, setBrand] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [desc, setDesc] = useState("");
 
+  const dispatch = useDispatch();
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
     TransformFile(file);
-  }
+  };
 
   const TransformFile = (file) => {
     const reader = new FileReader();
 
-    if(file){
+    if (file) {
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         setProductImg(reader.result);
-      }
+      };
     } else {
       setProductImg("");
     }
-  }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(
+      productsCreate({
+        name,
+        brand,
+        desc,
+        price,
+        image: productImg,
+      })
+    );
+  };
 
   return (
     <StyledCreateProduct>
-      <StyledForm>
+      <StyledForm onSubmit={handleSubmit}>
         <h3>Create a Product</h3>
-        <input type="file" accept="image/*" 
-        onChange={handleImageUpload} required/>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          required
+        />
         <select onChange={(e) => setBrand(e.target.value)} required>
           <option value="">Select Brand</option>
           <option value="iphone">Apple</option>
@@ -59,11 +83,22 @@ const CreateProduct = () => {
           onChange={(e) => setDesc(e.target.value)}
           required
         />
+        <PrimaryButton>
+          {createStatus === "pending" ? "Submitting" : "Submit"}
+        </PrimaryButton>
       </StyledForm>
-      <ImagePreview></ImagePreview>
+      <ImagePreview>
+        {productImg ? (
+          <>
+            <img src={productImg} alt="error!" />
+          </>
+        ) : (
+          <p>Product image upload preview will appear here!</p>
+        )}
+      </ImagePreview>
     </StyledCreateProduct>
-  )
-}
+  );
+};
 
 export default CreateProduct;
 

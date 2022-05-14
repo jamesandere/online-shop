@@ -18,7 +18,7 @@ app.use(cors());
 
 app.use("/api/register", register);
 app.use("/api/login", login);
-app.use("/products", productsRoute);
+app.use("/api/products", productsRoute);
 app.use("/api/stripe", stripe);
 
 app.listen(process.env.PORT || 5000, 
