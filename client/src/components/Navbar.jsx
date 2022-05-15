@@ -33,7 +33,7 @@ const Navbar = () => {
         {auth._id ? (
           <Links>
            <div>
-             <Link to="/admin/summary">Admin</Link>
+             {auth.isAdmin && <Link to="/admin/summary">Admin</Link>}
            </div>
            <div onClick={()=>{
             dispatch(logoutUser(null));
