@@ -1,9 +1,9 @@
 const router = require('express').Router();
-// const products = require('../data');
 const cloudinary = require('../utils/cloudinary');
 const Product = require("../models/products");
+const { auth, isAdmin } = require('../middleware/auth');
 
-router.post("/", async (req, res) => {
+router.post("/", isAdmin, async (req, res) => {
     const { name, brand, desc, price, image } = req.body;
 
     try {
