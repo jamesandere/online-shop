@@ -8,6 +8,10 @@ import { setHeaders, url } from "../redux/api";
 const Summary = () => {
   const [users, setUsers] = useState([]);
   const [usersPercentage, setUsersPercentage] = useState(0);
+  const [orders, setOrders] = useState([]);
+  const [ordersPercentage, setOrdersPercentage] = useState(0);
+  const [income, setIncome] = useState([]);
+  const [incomePercentage, setIncomePercentage] = useState(0);
 
   const compare = (a, b) => {
     if(a._id < b._id) {
@@ -36,6 +40,36 @@ const Summary = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${url}/orders/stats`, setHeaders());
+        res.data.sort(compare);
+        setOrders(res.data);
+        setOrdersPercentage(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
+        console.log("Orders", res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${url}/orders/income/stats`, setHeaders());
+        res.data.sort(compare);
+        setIncome(res.data);
+        setIncomePercentage(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
+        console.log("Income", res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
   const data = [
     {
       icon: <FaUsers />,
@@ -48,21 +82,21 @@ const Summary = () => {
     },
     {
       icon: <FaClipboard />,
-      digits: 70,
+      digits: orders[0]?.total,
       isMoney: false,
       title: "Orders",
       color: "rgb(38, 198, 249)",
       bgColor: "rgba(38, 198, 249, 0.12)",
-      percentage: -20,
+      percentage: ordersPercentage,
     },
     {
       icon: <FaChartBar />,
-      digits: 500,
+      digits: income[0]?.total,
       isMoney: true,
       title: "Earnings",
       color: "rgb(253, 181, 40)",
       bgColor: "rgba(253, 181, 40, 0.12)",
-      percentage: 60,
+      percentage: incomePercentage,
     },
   ];
 
