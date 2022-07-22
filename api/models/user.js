@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String, required: true, minLength: 5, maxLength: 1024},
   isAdmin: { type: Boolean, default: false },
-});
+}, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);
 
