@@ -8,6 +8,7 @@ const register = require('./routes/register');
 const login = require('./routes/login');
 const stripe = require('./routes/stripe');
 const users = require('./routes/users');
+const orders = require('./routes/orders');
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use("/api/login", login);
 app.use("/api/products", productsRoute);
 app.use("/api/stripe", stripe);
 app.use("/api/users", users);
+app.use("/api/orders", orders);
 
 app.listen(process.env.PORT || 5000, 
     ()=> console.log(`Server started on port ${process.env.PORT}`));
