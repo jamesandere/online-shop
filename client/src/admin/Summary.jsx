@@ -4,6 +4,7 @@ import Widget from "./summary-components/Widget";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { setHeaders, url } from "../redux/api";
+import Chart from "./summary-components/Chart";
 
 const Summary = () => {
   const [users, setUsers] = useState([]);
@@ -91,7 +92,7 @@ const Summary = () => {
     },
     {
       icon: <FaChartBar />,
-      digits: income[0]?.total,
+      digits: income[0]?.total && income[0]?.total / 100,
       isMoney: true,
       title: "Earnings",
       color: "rgb(253, 181, 40)",
@@ -114,6 +115,7 @@ const Summary = () => {
             ))}
           </WidgetWrapper>
         </Overview>
+        <Chart />
       </MainStats>
       <SideStats></SideStats>
     </StyledSummary>
