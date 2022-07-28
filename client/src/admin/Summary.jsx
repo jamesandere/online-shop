@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { setHeaders, url } from "../redux/api";
 import Chart from "./summary-components/Chart";
+import Transactions from "./summary-components/Transactions";
 
 const Summary = () => {
   const [users, setUsers] = useState([]);
@@ -117,7 +118,9 @@ const Summary = () => {
         </Overview>
         <Chart />
       </MainStats>
-      <SideStats></SideStats>
+      <SideStats>
+        <Transactions />
+      </SideStats>
     </StyledSummary>
   );
 };
