@@ -3,6 +3,21 @@ const Order = require("../models/order");
 const router = require("express").Router();
 const moment = require("moment");
 
+// GET ORDERS
+
+router.get("/", isAdmin, async (req, res) => {
+  const query = req.query.new;
+  try {
+    const orders = query ? await Order.find().sort({c_id: -1}).limit(4)
+    : await Order.find().sort({_id: -1});
+
+    res.status(200).send(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+})
+
 // GET ORDER STATS
 
 router.get("/stats", isAdmin, async (req, res) => {
