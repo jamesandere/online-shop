@@ -82,6 +82,8 @@ const Chart = () => {
                 type="monotone"
                 dataKey="amount"
                 stroke="#8884d8"
+                strokeWidth="3"
+                dot={{ fill:"#8884d8", strokeWidth: 2, r: 4 }}
                 activeDot={{ r: 8 }}
               />
             </LineChart>

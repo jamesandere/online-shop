@@ -1,12 +1,13 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import { FaUsers, FaStore, FaClipboard, FaTachometerAlt } from "react-icons/fa";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.auth);
 
-  if(!user.isAdmin) return <p>Access denied</p>
+  if (!user.isAdmin) return <p>Access denied</p>;
 
   return (
     <StyledDashboard>
@@ -18,7 +19,7 @@ const Dashboard = () => {
           }
           to="/admin/summary"
         >
-          Summary
+          <FaTachometerAlt /> Summary
         </NavLink>
         <NavLink
           className={({ isActive }) =>
@@ -26,7 +27,23 @@ const Dashboard = () => {
           }
           to="/admin/products"
         >
-          Products
+          <FaStore /> Products
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "link-active" : "link-inactive"
+          }
+          to="/admin/orders"
+        >
+          <FaClipboard /> Orders
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "link-active" : "link-inactive"
+          }
+          to="/admin/users"
+        >
+          <FaUsers /> Users
         </NavLink>
       </SideNav>
       <Content>
@@ -58,11 +75,19 @@ const SideNav = styled.div`
     padding: 0;
     text-transform: uppercase;
     font-size: 17px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
   }
   a {
     text-decoration: none;
     margin-bottom: 1rem;
     font-size: 14px;
+
+    svg {
+      margin-right: 0.5rem;
+      font-size: 18px;
+    }
   }
 `;
 
