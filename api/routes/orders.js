@@ -8,15 +8,37 @@ const moment = require("moment");
 router.get("/", isAdmin, async (req, res) => {
   const query = req.query.new;
   try {
-    const orders = query ? await Order.find().sort({c_id: -1}).limit(4)
-    : await Order.find().sort({_id: -1});
+    const orders = query
+      ? await Order.find().sort({ c_id: -1 }).limit(4)
+      : await Order.find().sort({ _id: -1 });
 
     res.status(200).send(orders);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
-})
+});
+
+//GET ALL-TIME STATS
+
+router.get("/all-time-stats", isAdmin, async (req, res) => {
+  try {
+    const orders = await Order.aggregate([
+      {
+        $match: {},
+      },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$total" },
+        },
+      },
+    ]);
+    res.status(200).send(orders);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 // GET ORDER STATS
 
@@ -83,7 +105,7 @@ router.get("/income/stats", isAdmin, async (req, res) => {
 
 // GET 1 WEEK SALES
 
-router.get("/week-sales",  async (req, res) => {
+router.get("/week-sales", async (req, res) => {
   const last7Days = moment()
     .day(moment().day() - 7)
     .format("YYYY-MM-DD HH:mm:ss");
