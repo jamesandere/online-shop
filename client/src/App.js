@@ -13,6 +13,9 @@ import Dashboard from './admin/Dashboard';
 import Products from './admin/Products';
 import Summary from './admin/Summary';
 import CreateProduct from './/admin/CreateProduct';
+import ProductsList from './admin/list/ProductsList';
+import Orders from './admin/Orders';
+import Users from './admin/Users';
 
 function App() {
   return (
@@ -28,9 +31,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Dashboard />}>
           <Route path="products" element={<Products />}>
+            <Route index element={<ProductsList />} />
             <Route path="create-product" element={<CreateProduct />} />
           </Route>
           <Route path="summary" element={<Summary />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="users" element={<Users />} />
         </Route>
         <Route path="*" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/not_found" />}/>
