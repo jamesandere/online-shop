@@ -9,8 +9,8 @@ const Widget = ({ data }) => {
         <Text>
             <h3>
                 {
-                    data.isMoney ? "$" + data.digits
-                    : data.digits
+                    data.isMoney ? "$" + data?.digits?.toLocaleString()
+                    : data?.digits?.toLocaleString()
                 }
             </h3>
             <p>{data.title}</p>
