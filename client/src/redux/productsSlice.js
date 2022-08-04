@@ -7,6 +7,7 @@ const initialState = {
   items: [],
   status: null,
   createStatus: null,
+  deleteStatus: null
 };
 
 export const productsFetch = createAsyncThunk(
@@ -31,6 +32,22 @@ export const productsCreate = createAsyncThunk(
         setHeaders()
       );
       return response?.data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data);
+    }
+  }
+);
+
+export const productsDelete = createAsyncThunk(
+  "products/productsDelete",
+  async (id) => {
+    try {
+      const response = await axios.delete(
+        `${url}/products/${id}`,
+        setHeaders()
+      );
+      return response.data;
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data);
@@ -63,6 +80,18 @@ const productsSlice = createSlice({
     },
     [productsCreate.rejected]: (state, action) => {
       state.createStatus = "rejected";
+    },
+    [productsDelete.pending]: (state, action) => {
+      state.deleteStatus = "pending";
+    },
+    [productsDelete.fulfilled]: (state, action) => {
+      const newList = state.items.filter(item => item._id !== action.payload._id);
+      state.items = newList;
+      state.deleteStatus = "success";
+      toast.error("Product Deleted!");
+    },
+    [productsDelete.rejected]: (state, action) => {
+      state.deleteStatus = "rejected";
     },
   },
 });
