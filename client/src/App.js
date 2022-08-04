@@ -16,6 +16,9 @@ import CreateProduct from './/admin/CreateProduct';
 import ProductsList from './admin/list/ProductsList';
 import Orders from './admin/Orders';
 import Users from './admin/Users';
+import Product from './pages/Details/Product';
+import Order from './pages/Details/Order';
+import UserProfile from './pages/Details/UserProfile';
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="/register" element={<Register /> } />
         <Route path="/login" element={<Login />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/order/:id" element={<Order />} />
+        <Route path="/user/:id" element={<UserProfile />} />
         <Route path="/admin" element={<Dashboard />}>
           <Route path="products" element={<Products />}>
             <Route index element={<ProductsList />} />
