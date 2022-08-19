@@ -1,7 +1,7 @@
 import React from 'react';
 import {useGetAllProductsQuery} from '../redux/productsApi';
 import { addToCart } from '../redux/cartSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
@@ -23,7 +23,9 @@ const Home = () => {
           {data?.map(product => 
             <div key={product._id} className="product">
               <h3>{product.name}</h3>
+              <Link to={`/product/${product._id}`}>
               <img src={product.image?.url} alt={product.name} />
+              </Link>
               <div className="details">
                 <span>{product.desc}</span>
                 <span className="price">${product.price}</span>
