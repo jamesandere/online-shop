@@ -19,6 +19,23 @@ router.get("/", isAdmin, async (req, res) => {
   }
 });
 
+// UPDATE ORDER
+
+router.put("/:id", isAdmin, async (req, res) => {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).send(updatedOrder);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 //GET ALL-TIME STATS
 
 router.get("/all-time-stats", isAdmin, async (req, res) => {
