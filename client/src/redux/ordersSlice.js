@@ -5,6 +5,7 @@ import { setHeaders, url } from "./api";
 const initialState = {
   list: [],
   status: null,
+  editStatus: null,
 };
 
 export const ordersFetch = createAsyncThunk("orders/ordersFetch", async () => {
@@ -16,7 +17,33 @@ export const ordersFetch = createAsyncThunk("orders/ordersFetch", async () => {
   }
 });
 
-export const ordersEdit = createAsyncThunk();
+export const ordersEdit = createAsyncThunk(
+  "orders/ordersEdit",
+  async (values, { getState }) => {
+    const state = getState();
+
+    let currentOrder = state.orders.list.filter(
+      (order) => order._id === values.id
+    );
+
+    const newOrder = {
+      ...currentOrder[0],
+      delivery_status: values.delivery_status,
+    };
+
+    try {
+      const response = await axios.put(
+        `${url}/orders/${values.id}`,
+        newOrder,
+        setHeaders()
+      );
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 const ordersSlice = createSlice({
   name: "orders",
@@ -33,9 +60,19 @@ const ordersSlice = createSlice({
     [ordersFetch.rejected]: (state, action) => {
       state.status = "rejected";
     },
-    [ordersEdit.pending]: (state, action) => {},
-    [ordersEdit.fulfilled]: (state, action) => {},
-    [ordersEdit.rejected]: (state, action) => {},
+    [ordersEdit.pending]: (state, action) => {
+      state.editStatus = "pending";
+    },
+    [ordersEdit.fulfilled]: (state, action) => {
+      const updatedOrders = state.list.map((order) =>
+        order._id === action.payload._id ? action.payload : order
+      );
+      state.list = updatedOrders;
+      state.editStatus = "success";
+    },
+    [ordersEdit.rejected]: (state, action) => {
+      state.editStatus = "rejected";
+    },
   },
 });
 
