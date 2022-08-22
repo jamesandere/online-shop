@@ -70,7 +70,7 @@ export default function OrdersList() {
             <DeliveryBtn onClick={() => handleOrderDelivered(params.row.id)}>
               Deliver
             </DeliveryBtn>
-            <View>View</View>
+            <View onClick={()=> navigate(`/order/${params.row.id}`)}>View</View>
           </Actions>
         );
       },
