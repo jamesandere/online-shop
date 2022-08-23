@@ -1,9 +1,12 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import UsersList from "./list/UsersList";
 
 const Users = () => {
   return (
-    <div>Users</div>
-  )
-}
+    <>
+      <UsersList />
+    </>
+  );
+};
 
-export default Users
+export default Users;
