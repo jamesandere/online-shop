@@ -18,6 +18,17 @@ router.get("/", isAdmin, async (req, res) => {
   }
 });
 
+// DELETE USER 
+
+router.delete("/:id", isAdmin, async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    res.status(200).send(deletedUser);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 router.get("/stats", isAdmin, async (req, res) => {
   const previousMonth = moment()
     .month(moment().month() - 1)
