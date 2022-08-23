@@ -96,6 +96,11 @@ const OrdersContainer = styled.div`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 5px;
   padding: 2rem;
+
+  p {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const Items = styled.div`
@@ -118,6 +123,7 @@ const Pending = styled.div`
   padding: 3px 5px;
   border-radius: 3px;
   font-size: 14px;
+  margin-left: 0.5rem;
 `;
 
 const Dispatched = styled.div`
@@ -126,6 +132,7 @@ const Dispatched = styled.div`
   padding: 3px 5px;
   border-radius: 3px;
   font-size: 14px;
+  margin-left: 0.5rem;
 `;
 
 const Delivered = styled.div`
@@ -134,4 +141,5 @@ const Delivered = styled.div`
   padding: 3px 5px;
   border-radius: 3px;
   font-size: 14px;
+  margin-left: 0.5rem;
 `;
