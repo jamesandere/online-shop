@@ -29,6 +29,22 @@ router.delete("/:id", isAdmin, async (req, res) => {
   }
 });
 
+// GET USER
+
+router.get("/find/:id", isUser, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).send({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 router.get("/stats", isAdmin, async (req, res) => {
   const previousMonth = moment()
     .month(moment().month() - 1)
